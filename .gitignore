@@ -1,0 +1,11 @@
+ESCOPO.md
+INCREMENTALIDADE_01.md
+INCREMENTALIDADES_FUTURAS.md
+REQUISITOS_INICIAIS.md
+# Artefatos de compilação e IDE
+**/bin/
+**/obj/
+.vs/
+TestResults/
+*.user
+*.suo
