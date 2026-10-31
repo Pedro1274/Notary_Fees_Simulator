@@ -1,6 +1,6 @@
 # SimuladorEmolumentos — MVP V1
 
-Simulador desktop Windows Forms, em português, offline e sem banco.
+Simulador em português com interface Windows Forms e SPA Angular 21 integrada a uma API .NET 10. Sem banco de dados.
 
 **Todos os atos e valores são fictícios, sem validade oficial.** Não há salvamento de simulações: os dados da sessão são descartados ao fechar. O único arquivo operacional é um diagnóstico técnico mínimo em `%LOCALAPPDATA%\SimuladorEmolumentos\diagnostico.log`, sem entradas monetárias ou dados pessoais.
 
@@ -56,6 +56,56 @@ Os dois projetos de testes usam `net10.0` e não dependem de WinForms ou banco. 
 
 ## Estado da validação
 
-Implementação e testes escritos; revisão estática dos arquivos realizada no Linux em 26/10/2026. `dotnet --info` retornou `command not found`; a tentativa de obter o instalador falhou por resolução de DNS (`dot.net`). Portanto **build, execução dos testes, fluxo manual no Windows e capturas de tela permanecem pendentes**. Não há evidência visual simulada apresentada como captura real, nem aprovação final dos critérios de aceite.
-
 O projeto está organizado em commits por funcionalidade na branch `main`. Após validar a entrega, identificar a V1 com tag/release e anexar este roteiro e as evidências.
+
+
+## Aplicação web Angular + API .NET
+
+A SPA fica em `src/SimuladorEmolumentos.Web` e a API em `src/SimuladorEmolumentos.Api`.
+A API reutiliza o catálogo e o serviço do Domain; nenhuma fórmula monetária foi duplicada no navegador.
+A interface usa componentes standalone, Reactive Forms tipados, signals e HttpClient.
+Configuração HTTP baseada na [documentação oficial Angular](https://angular.dev/guide/http/setup).
+
+Pré-requisitos: SDK .NET 10 conforme `global.json` e Node.js 24 LTS (24.21 ou superior recomendado).
+Em um terminal na raiz:
+
+```bash
+dotnet run --project src/SimuladorEmolumentos.Api
+```
+
+Em outro terminal:
+
+```bash
+cd src/SimuladorEmolumentos.Web
+npm ci
+npm start
+```
+
+Abra `http://localhost:4200`. O proxy de desenvolvimento encaminha `/api` para
+`http://localhost:5080`; não é necessário configurar CORS. Para outra porta, ajuste
+`proxy.conf.json`. Em produção, publique `dist/web/browser` em um servidor estático,
+configure o fallback da SPA para `index.html` e encaminhe `/api` para a API na mesma origem.
+O frontend não usa dados simulados locais quando a API está indisponível.
+
+Contrato HTTP (JSON camelCase):
+
+- `GET /api/catalog`: lista `{ state, actId, actName, requiresBase }`.
+- `POST /api/simulations`: recebe `{ "state": "SP", "actId": "escritura", "baseAmount": 10000 }`;
+  retorna `{ ruleId, formula, parameters, items: [{ description, amount }], total }`.
+  Atos fixos recebem `baseAmount: null`. Entradas inválidas retornam HTTP 400 com Problem Details.
+
+O formulário aceita valores como `10000,00` (até duas casas), rejeita pontos e agrupadores,
+limpa resultados ao editar e cancela requisições antigas. Há ações para limpar e copiar a memória.
+Os dados não são persistidos; os valores enviados à API são usados apenas no cálculo.
+
+Verificação do frontend:
+
+```bash
+npm run build
+npm test
+```
+
+Validação realizada em 31/10/2026: `npm run build` passou (bundle inicial de aproximadamente
+210 kB) e `npm test` passou com quatro testes de integração HTTP do frontend. Os testes cobrem
+valores fixos, entrada monetária, cancelamento ao editar e erros da API. Execução real da API e
+verificação visual no navegador permanecem pendentes.
