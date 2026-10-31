@@ -9,3 +9,9 @@ REQUISITOS_INICIAIS.md
 TestResults/
 *.user
 *.suo
+
+# Angular
+**/node_modules/
+**/dist/
+**/.angular/
+**/out-tsc/
