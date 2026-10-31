@@ -10,12 +10,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimuladorEmolumentos.Presen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimuladorEmolumentos.Domain.Tests", "tests\SimuladorEmolumentos.Domain.Tests\SimuladorEmolumentos.Domain.Tests.csproj", "{BDC27B6C-A3C7-5F4A-AFB3-CFCC725D6B8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimuladorEmolumentos.Api", "src\SimuladorEmolumentos.Api\SimuladorEmolumentos.Api.csproj", "{73D5C9BF-A1D2-4B1A-911B-196D136D751F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{73D5C9BF-A1D2-4B1A-911B-196D136D751F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73D5C9BF-A1D2-4B1A-911B-196D136D751F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73D5C9BF-A1D2-4B1A-911B-196D136D751F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73D5C9BF-A1D2-4B1A-911B-196D136D751F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B823ADD-9D07-5103-AC56-5DB480EC8B9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B823ADD-9D07-5103-AC56-5DB480EC8B9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B823ADD-9D07-5103-AC56-5DB480EC8B9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
